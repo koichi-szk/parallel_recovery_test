@@ -109,21 +109,96 @@ Initial gdb commands which run after invalid page worker is attached to gdb.
 
 Initial gdb commands which run after block worker is attached to gdb.
 
-## Other shell scripts
+## Run the test
 
 ### `rstore.sh`
 
 You need to run this script to prepare the test database.  This restore archived test database and replace `postgresql.conf` which contains several additioanl GUC parameters to enable parallel replay.
 
-### `start.sh`
+### Prepare your terminal:
 
-Run `pg_ctl start`.    For details, please take a look at `RunningTest.md`.
+You need terminals for the following purpose:
 
-### `startdebug.sh`
+* Main control of the test: runs `pg_ctl start` and do following tasks.
+* Terminal to show debug information: This is needed to display test information, including scripts to start gdb for each workers.
+* Terminal for gdb for startup proces (READER WORKER)
+* Terminal for gdb for dispatcher worker,
+* Terminal for gdb for transaction worker,
+* Terminal for gdb for invalid block worker,
+* Terminal for gdb for block worker: You may need more than one depending upon `num_preplay_workers` GUC parameter value.
 
-Display parallel replay test information.   This will show you how you can attach gdb to each replay worker.    For details, please take a look at `RunningTest.md`.
+### `start.sh` script
 
-### `kill.sh`
+You should run this script in main control terminal.   This will show output from `pg_ctl start` and then wait.   It's fine.   Please leave as is.
 
-Kills and terminate all the PostgreSQL processes.   Very typically, you need to terminate the test before postmaster begins to accept connections.   This script is for this purpose.   Don't worry.   The test database is not permanent and you can restore this with `restore.sh` script.
+```
+[koichi@ksubuntu:pr_test]$ start.sh
+waiting for server to start....2023-01-05 17:51:58.295 JST [1090620] LOG:  ?????????????????????????
+2023-01-05 17:51:58.295 JST [1090620] ???:  ????????????????"log"??????
+```
 
+### `startdebug.sh` script and run gdb against reader worker (startup process)
+
+After you run `start.sh`, PostgreSQL server start to run and fork start startup process (READER worker).  Startup process will then write some messages to `$PGDATA/pr_debug` file and waits for your intervention.
+
+Please run `startdebug.sh` script at the second terminal as shown above.  You will see the output like:
+
+```
+[koichi@ksubuntu:pr_test]$ startdebug.sh
+My worker idx is 0.
+Please touch /home/koichi/pg14_pr_database/pr_debug/0.signal to begin.  I'm waiting for it.
+
+Do following from another shell:
+sudo gdb \
+-ex 'attach 1090918' \
+-ex 'tb PRDebug_sync' \
+-ex 'source reader_break.gdb' \
+-ex 'shell touch  /home/koichi/pg14_pr_database/pr_debug/0.signal' \
+-ex 'continue'
+```
+
+Please copy and past the obove shell script from `sudo` to the end of the line to run gdb, attach reader worker process to it, attach signal file reader worker is waiting and then continue its run.
+
+The file `reader_break.gdb` file contains initial gdb commands to run.   Typically, it defines shortcut macro and breakpoints.   You can change this file as you like.
+
+Typical contents of this file is as follows:
+
+```
+# command definition, shortcut for "finish"
+define f
+finish
+end
+define c
+continue
+end
+b PR_enqueue
+b PR_fetchQueue
+b PR_breakpoint_func
+b ReadRecord
+```
+
+`ReadRecord` is a function in `xlog.c` which reads one `XLogRecord`.   If this is in your breakpoint list, then the reader worker will read one or two XLogRecord before it starts redo.   In this case, please type c until you have additional lines in `startdebug.sh` shell script terminal.
+
+
+### Run gdb against dispatcher worker
+
+Then, you will see additional lines of output similar to the above to attach gdb to dispatcher worker.
+
+In another termianl window for dispatcher worker, please copy and paste the output to the shell to run gdb, attach it to the dispatcher worker and keep run.  In the shell script shown at the terminal window, you will see the file `dispatcher_worker_break.gdb` instead to use initial gdb commands to run.  The typical contents is as follows:
+
+```
+define f
+finish
+end
+define c
+continue
+end
+b PR_enqueue
+b PR_fetchQueue
+b PR_breakpoint_func
+b dispatcherWorkerLoop
+b DecodeXLogRecord
+b DecodeXLogRecordBlockInfo
+```
+
+### Run gdb against transaction worker
