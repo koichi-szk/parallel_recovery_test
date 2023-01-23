@@ -1,4 +1,12 @@
-# command definition, shortcut for "finish"
+# ================================================================================
+# Initial command and break point definition for READER worker (Startup process, in fact)
+# processes.
+#
+# You can edit this file to meet your needs.
+# Commented-out break points includes major break point candidates.
+# ================================================================================
+#
+# command definition, shortcut for "finish" and "continue"
 define f
 finish
 end
