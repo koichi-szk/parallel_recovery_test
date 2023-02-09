@@ -15,7 +15,7 @@ OPTIMIZE_LEVEL=O0
 #			parallel recovery framework and measure potential
 #			performance gain.
 #
-DEBUGFLAGS="-DWAL_DEBUG -DPR_IGNORE_REPLAY_ERROR"
+DEBUGFLAGS="-DWAL_DEBUG -DPR_IGNORE_REPLAY_ERROR -DPR_SKIP_REPLAY"
 CFLAGS="CFLAGS=\"-$OPTIMIZE_LEVEL $DEBUGFLAGS\""
 
 # On some operating system like Ubuntu22.04, you may specify the path
@@ -28,4 +28,4 @@ CC="CC=/usr/bin/gcc"
 TARGET_DIR="/home/koichi/pg14_pr"
 
 cd $SRCDIR
-./configure PREFIX=$TARGET_DIR --enable-debug --with-perl --with-python --with-openssl --enable-nls --with-libxml --with-libxslt --with-systemd --with-lz4 --with-tcl CFLAGS="-O0 $DEBUGFLAGS" $CC |& tee $logf
+./configure --prefix=$TARGET_DIR --enable-debug --with-perl --with-python --with-openssl --enable-nls --with-libxml --with-libxslt --with-systemd --with-lz4 --with-tcl CFLAGS="-O0 $DEBUGFLAGS" $CC |& tee $logf
