@@ -7,7 +7,7 @@
 # processes quickly for further actions.
 #
 cd $HOME/parallel_recovery_test
-source conf.sh
+source ./conf.sh
 
 # To switch among multiple versions of postgres (and EPAS),
 # I have "pgmode" shell script.   You may need your owwn ones
@@ -17,3 +17,5 @@ pgmode pg14_pr
 killall -9 postgres
 
 rm -f $TESTDB/postmaster.pid
+
+./backup_log.sh
