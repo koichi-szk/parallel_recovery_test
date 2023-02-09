@@ -12,6 +12,7 @@
 # For break point definitions of each replay worker, please take a look at
 # the file *.gdb.
 #
+cd $HOME/parallel_recovery_test
 . conf.sh
 cd $TESTDB/pr_debug
 tail -f pr_debug.log

@@ -6,7 +6,8 @@
 # This is needed in parallel recovery test run to kill running
 # processes quickly for further actions.
 #
-. conf.sh
+cd $HOME/parallel_recovery_test
+source conf.sh
 
 # To switch among multiple versions of postgres (and EPAS),
 # I have "pgmode" shell script.   You may need your owwn ones

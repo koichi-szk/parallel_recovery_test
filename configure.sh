@@ -1,5 +1,6 @@
 #!/bin/bash
-. ./conf.sh
+cd $HOME/parallel_recovery_test
+source ./conf.sh
 logf=$LOGDIR/configure_`shortdate`.log
 
 # Please specify O0 as OPTIMIZE_LEVEL to avoid "optimized out"

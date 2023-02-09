@@ -1,5 +1,11 @@
 #!/bin/bash
-cd $HOME/pr_test
+#
+# Create initial test database.
+# 
+# Please note that we use vanila PG14 to create the database.
+# pgmode pg14 is my local tool to set environment for PostgreSQL 14.
+# 
+cd $HOME/parallel_recovery_test
 . conf.sh
 pgmode pg14
 rm -rf $TESTDB

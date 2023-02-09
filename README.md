@@ -47,6 +47,7 @@ This script runs `configure` script to configure build environment and its targe
 * `O0` flags to make optimization minimum so that all the steps and variables are visible to gdb.
 * `-DWALDEBUG` flag to enable painless connection of replay workers to gdb.
 * `-DPR_IGNORE_REPLAY_ERROR` flag to ignore any internal conflict in existing WAL replay functions.
+* `-DPR_SKIP_REPLAY` flag.  This flag replaces actual replay function call with dummy wait.  This flag is useful to test surrounding infrastructures of WAL record reading, dispatch and synchronization among workers.
 
 ### `build.sh`
 
@@ -81,7 +82,7 @@ We have several additional GUC parameters to enable and control the parallel rec
 
 ### `create.sh`
 
-This script is used to create test database.   The script runs initdb, start it and run pgbench to create several WAL segments for the test and then stop immediately to leave as many outstanding WALs as possible.   The material will be archived with tar for later reuse.
+This script is used to create test database.   The script runs initdb, start it and run pgbench to create several WAL segments for the test and then stop immediately to leave as many outstanding WALs as possible.   The material will be archived with tar for later reuse.  No parameters.
 
 This creates default database for my login name (`koichi`).  Please change this to your favorite value.
 
@@ -117,13 +118,16 @@ You need to run this script to prepare the test database.  This restore archived
 
 ### `start.sh`
 
-Run `pg_ctl start`.    For details, please take a look at `RunningTest.md`.
+Run `pg_ctl start`.    For details, please take a look at `RunningTest.md`.  No parameeters.
 
 ### `startdebug.sh`
 
-Display parallel replay test information.   This will show you how you can attach gdb to each replay worker.    For details, please take a look at `RunningTest.md`.
+Display parallel replay test information.   This will show you how you can attach gdb to each replay worker.    For details, please take a look at `RunningTest.md`.  No parameters.
 
 ### `kill.sh`
 
-Kills and terminate all the PostgreSQL processes.   Very typically, you need to terminate the test before postmaster begins to accept connections.   This script is for this purpose.   Don't worry.   The test database is not permanent and you can restore this with `restore.sh` script.
+Kills and terminate all the PostgreSQL processes.   Very typically, you need to terminate the test before postmaster begins to accept connections.   This script is for this purpose.   Don't worry.   The test database is not permanent and you can restore this with `restore.sh` script.   No parameters.
 
+### `backup_log.sh`
+
+Copies latest debug file at `$PGDATA/pr_debug` and `$PGDATA/log` directory to `pr_debuglog` directory and `db_log` directory respectively.
