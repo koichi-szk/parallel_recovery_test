@@ -27,6 +27,7 @@ end
 b PR_enqueue
 b PR_fetchQueue
 b PR_breakpoint_func
+b PR_error_here
 b ReadRecord
 # b PR_recvSync
 # b PR_sendSync

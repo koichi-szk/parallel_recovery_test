@@ -19,6 +19,7 @@ b blockWorkerLoop
 b PR_enqueue
 b PR_fetchQueue
 b PR_breakpoint_func
+b PR_error_here
 # b PR_recvSync
 # b PR_sendSync
 # b PRDebug_sync
