@@ -10,4 +10,5 @@ cd $HOME/parallel_recovery_test
 # PostgreSQL14 with parallel replay patch.
 pgmode pg14_pr
 
+./restore.sh
 pg_ctl -c start -D $TESTDB

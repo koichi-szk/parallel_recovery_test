@@ -19,7 +19,7 @@ end
 # b PR_atStartWorker
 # b dispatcherWorkerLoop
 # b txnWorkerLoop
-# b invalidPageWorkerLoop
+b invalidPageWorkerLoop
 # b blockWorkerLoop
 # b PR_allocBuffer
 # b PR_freeBuffer
@@ -41,4 +41,4 @@ b PR_error_here
 # b XLogReadBufferForRedoExtended
 # b XLogInitBufferForRedo
 # b PathNameOpenFile
-b DecodeXLogRecord
+# b DecodeXLogRecord

@@ -34,3 +34,5 @@ b PR_error_here
 # b XLogReadBufferForRedoExtended
 # b XLogInitBufferForRedo
 # b PathNameOpenFile
+b PR_redo
+b sigsegv_handler

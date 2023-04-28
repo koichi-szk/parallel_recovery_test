@@ -20,11 +20,11 @@ end
 # b dispatcherWorkerLoop
 # b txnWorkerLoop
 # b invalidPageWorkerLoop
-# b blockWorkerLoop
+b blockWorkerLoop
 # b PR_allocBuffer
 # b PR_freeBuffer
 # b PR_enqueue
-b PR_fetchQueue
+# b PR_fetchQueue
 b PR_breakpoint_func
 b PR_error_here
 # b PR_recvSync
@@ -41,8 +41,8 @@ b PR_error_here
 # b XLogReadBufferForRedoExtended
 # b XLogInitBufferForRedo
 # b PathNameOpenFile
-b DecodeXLogRecord
-b DecodeXLogRecordBlockInfo
+# b DecodeXLogRecord
+# b DecodeXLogRecordBlockInfo
 # Suspect function with parallel recovery
 # Breakpoints for redo function entry for each RMID
 # b xlog_redo
@@ -54,9 +54,9 @@ b DecodeXLogRecordBlockInfo
 # b multixact_redo
 # b relmap_redo
 # b standby_redo
-b heap2_redo
+# b heap2_redo
 # called from heap2_redo()
-b heap_xlog_multi_insert
+# b heap_xlog_multi_insert
 # b heap_redo
 # b btree_redo
 # b hash_redo
@@ -69,3 +69,5 @@ b heap_xlog_multi_insert
 # b replorigin_redo
 # b generic_redo
 # b logicalmsg_redo
+# b PR_redo
+b sigsegv_handler

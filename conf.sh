@@ -6,4 +6,6 @@ export SRCDIR=/hdd2/koichi/postgres-parallel_recovery_14_6/postgres
 export TESTDB=$DBDIR/$DBHOME
 export LOGDIR=$TESTDIR/log
 export HTAGDIR=/hdd2/koichi/postgres_htag/REL_14_6_PR
+export SRCBACKUPDIR=$TESTDIR/old_source
+mkdir -p $SRCBACKUPDIR
 pgmode pg14_pr

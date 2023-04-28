@@ -24,11 +24,11 @@ end
 # b blockWorkerLoop
 # b PR_allocBuffer
 # b PR_freeBuffer
-b PR_enqueue
-b PR_fetchQueue
+# b PR_enqueue
+# b PR_fetchQueue
 b PR_breakpoint_func
 b PR_error_here
-b ReadRecord
+# b ReadRecord
 # b PR_recvSync
 # b PR_sendSync
 # b PRDebug_sync
@@ -43,6 +43,6 @@ b ReadRecord
 # b XLogReadBufferForRedoExtended
 # b XLogInitBufferForRedo
 # b PathNameOpenFile
-b DecodeXLogRecord
-b DecodeXLogRecordBlockInfo
+# b DecodeXLogRecord
+# b DecodeXLogRecordBlockInfo
 # b xlog_outdesc

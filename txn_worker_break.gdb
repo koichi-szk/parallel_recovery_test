@@ -18,13 +18,13 @@ end
 # b ParallelRedoProcessMain
 # b PR_atStartWorker
 # b dispatcherWorkerLoop
-# b txnWorkerLoop
+b txnWorkerLoop
 # b invalidPageWorkerLoop
 # b blockWorkerLoop
 # b PR_allocBuffer
 # b PR_freeBuffer
-b PR_enqueue
-b PR_fetchQueue
+# b PR_enqueue
+# b PR_fetchQueue
 b PR_breakpoint_func
 b PR_error_here
 # b PR_recvSync
@@ -41,10 +41,10 @@ b PR_error_here
 # b XLogReadBufferForRedoExtended
 # b XLogInitBufferForRedo
 # b PathNameOpenFile
-b DecodeXLogRecord
-# `b DecodeXLogRecordBlockInfo
-b heap_xlog_multi_insert
-b PageAddItem
+# b DecodeXLogRecord
+# b DecodeXLogRecordBlockInfo
+# b heap_xlog_multi_insert
+# b PageAddItem
 # Breakpoints for redo function entry for each RMID
 # b xlog_redo
 # b xact_redo
@@ -68,3 +68,6 @@ b PageAddItem
 # b replorigin_redo
 # b generic_redo
 # b logicalmsg_redo
+b PR_redo
+b sigsegv_handler
+b PR_forget_invalid_pages

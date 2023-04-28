@@ -16,7 +16,8 @@ OPTIMIZE_LEVEL=O0
 #			parallel recovery framework and measure potential
 #			performance gain.
 #
-DEBUGFLAGS="-DWAL_DEBUG -DPR_IGNORE_REPLAY_ERROR -DPR_SKIP_REPLAY"
+# DEBUGFLAGS="-DWAL_DEBUG -DPR_IGNORE_REPLAY_ERROR -DPR_SKIP_REPLAY"
+DEBUGFLAGS="-DWAL_DEBUG -DPR_IGNORE_REPLAY_ERROR"
 CFLAGS="CFLAGS=\"-$OPTIMIZE_LEVEL $DEBUGFLAGS\""
 
 # On some operating system like Ubuntu22.04, you may specify the path
